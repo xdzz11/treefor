@@ -341,10 +341,10 @@ const CONFIG = {
         treeHeight: 24,  
         treeRadius: 8,
         nebulaCount: 2000,  // 金色星尘小点数量
-        innerParticleCount: 15000,  // 树内部发光粒子数量
-        orbitParticleCount: 150    // 【修改】降低为文字所需的字符数量，每个字符由一个Sprite构成
+        innerParticleCount: 16000,  // 树内部发光粒子数量
+        orbitParticleCount: 200    // 【修改】降低为文字所需的字符数量，每个字符由一个Sprite构成
     },
-    orbitText: "Happy New yea Li K!", // 【新增】自定义环绕文字
+    orbitText: "Happy New year!  Li K  ", // 【新增】自定义环绕文字
     camera: { z: 50 },
     preload: {
 		autoScanLocal: false, // 关闭之前的自动扫描
@@ -1019,7 +1019,7 @@ function createCharTexture(char) {
     const ctx = canvas.getContext('2d');
     // 设置发光粒状感文字：白色
     ctx.fillStyle = 'white';
-    ctx.font = 'bold 44px "Cinzel", serif';
+    ctx.font = 'bold 60px "Cinzel", serif';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.shadowColor = 'rgba(255,255,255,0.7)'; ctx.shadowBlur = 10;
     ctx.fillText(char, 32, 32);
@@ -1055,10 +1055,10 @@ function createOrbitRibbon() {
         const sprite = new THREE.Sprite(material);
         
         // 螺旋轨道计算
-        const spiralLoops = 4.5;
+        const spiralLoops = 4;
         const angle = t * Math.PI * 2 * spiralLoops;
-        const h = t * treeHeight * 1.1 - treeHeight / 2;
-        const r = (1 - t * 0.9) * treeRadius + 1.8;
+        const h = (0.5 - t) * treeHeight * 1.1; 
+        const r = t * 0.9 * treeRadius + 1.8; 
 
         // 设置随机大小增加粒状感
         const s = 0.55 + Math.random() * 0.25;
@@ -1100,7 +1100,7 @@ function updateOrbitRibbon(dt) {
         sprite.position.z = Math.sin(currentAngle) * data.baseRadius;
         
         // 随时间闪烁透明度，增强粒状感
-        sprite.material.opacity = 0.2 + 0.5 * Math.sin(time * 4 + data.twinkle);
+        sprite.material.opacity = 0.2 + 0.3 * Math.sin(time * 4 + data.twinkle);
         
         // 如果需要文字跟随主题变色，开启下面这行
         //sprite.material.color.lerp(themeColor, 0.05);
@@ -1572,7 +1572,7 @@ function setupEvents() {
     document.getElementById('share-btn').addEventListener('click', async () => {
         const shareData = {
             title: 'Happy New Year 2026 🎄',
-            text: '梦想飞驰团队送你一棵圣诞树，祝你圣诞快乐！',
+            text: '您的朋友送您一棵圣诞树，祝您今天快乐！',
             url: window.location.href
         };
         
